@@ -19,7 +19,7 @@ class SupplierManager extends Component
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:suppliers,email,' . $this->supplier_id,
-            'phone' => 'nullable|string|max:20',
+            'phone' => 'nullable|string|max:10',
             'address' => 'nullable|string',
         ];
     }
