@@ -6,13 +6,14 @@
                 <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">Supplier Management</h2>
 
             </div>
-            <button
-                onclick="generateAndPrint(
-                    {{ json_encode($suppliers->items()) }},
-                    {{ $suppliers->currentPage() }},
-                    {{ $suppliers->perPage() }}
-                )"
-                class="bg-gray-800 hover:bg-gray-900 text-white font-semibold py-2 px-4 rounded-lg shadow flex items-center gap-2 transition focus:outline-none">
+            <button onclick="generateAndPrint(
+                        {{ json_encode($suppliers->items()) }},
+                        {{ $suppliers->currentPage() }},
+                        {{ $suppliers->perPage() }},
+                        {{ json_encode(\DB::table('company_settings')->value('name') ?? 'Thilina') }},
+                        {{ json_encode(auth()->check() ? auth()->user()->name : 'Guest') }}
+                    )"
+                    class="bg-gray-800 hover:bg-gray-900 text-white font-semibold py-2 px-4 rounded-lg shadow flex items-center gap-2 transition focus:outline-none">
                 Print List
             </button>
             @if (session()->has('message'))

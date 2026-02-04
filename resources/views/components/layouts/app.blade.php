@@ -7,10 +7,11 @@
         <title>{{ $title ?? 'Supplier Management' }}</title>
 
         <script src="https://cdn.tailwindcss.com"></script>
+        
     </head>
     <body>
         {{ $slot }}
 
-        
+
     </body>
 </html>
