@@ -1,6 +1,8 @@
 <?php
 
 use App\Livewire\SupplierManager;
+use App\Models\Supplier;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
@@ -15,4 +17,7 @@ Route::view('profile', 'profile')
 
 require __DIR__.'/auth.php';
 
+
 Route::get('/suppliers', SupplierManager::class);
+
+

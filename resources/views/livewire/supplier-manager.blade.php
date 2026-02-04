@@ -6,6 +6,15 @@
                 <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">Supplier Management</h2>
 
             </div>
+            <button
+                onclick="generateAndPrint(
+                    {{ json_encode($suppliers->items()) }},
+                    {{ $suppliers->currentPage() }},
+                    {{ $suppliers->perPage() }}
+                )"
+                class="bg-gray-800 hover:bg-gray-900 text-white font-semibold py-2 px-4 rounded-lg shadow flex items-center gap-2 transition focus:outline-none">
+                Print List
+            </button>
             @if (session()->has('message'))
                 <script>
 
@@ -94,39 +103,40 @@
                         <span class="bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-0.5 rounded-full">{{ $suppliers->total() }} Records</span>
                     </div>
 
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
+                    <div class="overflow-hidden">
+                        <table class="min-w-full divide-y divide-gray-200 table-fixed"> <thead class="bg-gray-50">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact Info</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address</th>
-                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">Name</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">Contact Info</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/3">Address</th>
+                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @forelse($suppliers as $supplier)
                                     <tr class="hover:bg-gray-50 transition duration-150 ease-in-out">
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="flex items-center">
+                                        <td class="px-6 py-4 align-top">
+                                            <div class="flex items-start">
                                                 <div class="flex-shrink-0 h-10 w-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-bold text-lg">
                                                     {{ substr($supplier->name, 0, 1) }}
                                                 </div>
                                                 <div class="ml-4">
-                                                    <div class="text-sm font-medium text-gray-900">{{ $supplier->name }}</div>
+                                                    <div class="text-sm font-medium text-gray-900 break-words">{{ $supplier->name }}</div>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">{{ $supplier->email }}</div>
-                                            <div class="text-sm text-gray-500">{{ $supplier->phone ?? '-' }}</div>
+
+                                        <td class="px-6 py-4 align-top">
+                                            <div class="text-sm text-gray-900 break-all">{{ $supplier->email }}</div> <div class="text-sm text-gray-500 mt-1">{{ $supplier->phone ?? '-' }}</div>
                                         </td>
-                                        <td class="px-6 py-4">
-                                            <div class="text-sm text-gray-600 truncate max-w-xs" title="{{ $supplier->address }}">
-                                                {{ Str::limit($supplier->address, 40) }}
+
+                                        <td class="px-6 py-4 align-top">
+                                            <div class="text-sm text-gray-600 break-words">
+                                                {{ $supplier->address }}
                                             </div>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+
+                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium align-top">
                                             <div class="flex justify-end gap-2">
                                                 <button wire:click="edit({{ $supplier->id }})" class="text-indigo-600 hover:text-indigo-900 p-2 hover:bg-indigo-50 rounded-full transition" title="Edit">
                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2-2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
@@ -181,3 +191,4 @@
         })
     }
 </script>
+<script src="{{ asset('js/print-helper.js') }}"></script>

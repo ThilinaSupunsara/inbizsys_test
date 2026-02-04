@@ -94,7 +94,7 @@ class SupplierManager extends Component
     public function render()
     {
         return view('livewire.supplier-manager', [
-            'suppliers' => Supplier::latest()->paginate(10),
+            'suppliers' => Supplier::latest()->paginate(20),
         ]);
     }
 }
